@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سیستم دسترسی کاربران | پنل ورود</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-md w-96">
+        <h1 class="text-3xl font-bold mb-6 text-center">ورود به سیستم</h1>
+        <form id="loginForm">
+            <label for="password" class="block mb-2">رمز عبور:</label>
+            <input type="password" id="password" class="border border-gray-300 p-2 w-full rounded mb-4" required>
+            <button type="submit" class="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">ورود</button>
+        </form>
+        <div id="message" class="mt-4 text-center"></div>
+    </div>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const password = document.getElementById('password').value;
+
+            const response = await fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({ password })
+            });
+
+            const data = await response.json();
+            document.getElementById('message').innerText = data.message;
+        });
+    </script>
+</body>
+</html>
